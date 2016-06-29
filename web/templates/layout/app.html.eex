@@ -8,6 +8,7 @@
     <meta name="author" content="">
 
     <title>Hello DataDemo!</title>
+    <link href="https://govuk-elements.herokuapp.com/public/stylesheets/elements-page.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
