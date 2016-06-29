@@ -22,6 +22,7 @@ defmodule DataDemo.Mixfile do
                     :phoenix_ecto, :postgrex,
                     :httpoison,
                     :con_cache,
+                    :yaml_elixir,
                     ]]
   end
 
@@ -44,6 +45,8 @@ defmodule DataDemo.Mixfile do
      {:con_cache, "~> 0.11.0"},
      {:data_morph, git: "https://github.com/robmckinnon/data_morph.git"},
      {:httpoison, "~> 0.8.3"},
+     { :yaml_elixir, "~> 1.0.0" },
+     { :yamerl, github: "yakaz/yamerl" },
    ]
   end
 
