@@ -10,8 +10,22 @@ defmodule DataDemo.PageView do
     |> Enum.join(" ")
   end
 
-  def england_or_wales authority do
-    authority.uk == "ENG" || authority.uk == "WLS"
+  def count_in list, function do
+    list
+    |> Enum.filter(&(function.(&1)))
+    |> Enum.count
+  end
+
+  def england_or_wales do
+    fn item -> item.uk == "ENG" || item.uk == "WLS" end
+  end
+
+  def scotland do
+    fn item -> item.uk == "SCT" end
+  end
+
+  def northern_ireland do
+    fn item -> item.uk == "NIR" end
   end
 
   def local_authority entity, authorities_by_id do
