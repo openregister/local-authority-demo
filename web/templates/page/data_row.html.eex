@@ -1,0 +1,13 @@
+<tr class=''>
+  <td></td>
+  <td class=''><%= @authority.local_authority <> @authority.end_date %></td>
+  <td class=''><%= @authority.uk %></td>
+  <td class=''><%= @authority.name %></td>
+  <%= for [file, list] <- @data do %>
+  <td class=''>
+    <% item = match_from_list(list, @authority) %>
+    <%= list |> local_authority_name(@authority, file) %>
+  </td>
+  <% end %>
+  <td class=''><%= match_count(@data, @authority) %></td>
+</tr>

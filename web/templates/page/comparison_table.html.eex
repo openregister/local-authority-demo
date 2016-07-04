@@ -1,0 +1,24 @@
+<div class="grid-row">
+  <div class="column-half">
+    <h2 class="heading-large"><%= @title %></h2>
+  </div>
+  <table id="names" class="tablesorter">
+    <thead>
+      <tr>
+        <th></th>
+        <th class=''>Local Authority</th>
+        <th class=''>Country</th>
+        <th class=''>Name</th>
+        <%= for [file, _] <- @maps_list do %>
+        <th><%= file %></th>
+        <% end %>
+        <th class=''>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for authority <- authorities(@data_list_by_id), authority.uk == @uk do %>
+        <%= render "data_row.html", authority: authority, data: @maps_list%>
+      <% end %>
+    </tbody>
+  </table>
+</div>

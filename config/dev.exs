@@ -38,6 +38,6 @@ config :data_demo, DataDemo.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "data_demo_dev",
+  database: System.get_env("DATABASE_NAME"),
   hostname: "localhost",
   pool_size: 10

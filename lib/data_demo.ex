@@ -14,6 +14,7 @@ defmodule DataDemo do
       supervisor(DataDemo.Endpoint, []),
       # Start your own worker by calling: DataDemo.Worker.start_link(arg1, arg2, arg3)
       # worker(DataDemo.Worker, [arg1, arg2, arg3]),
+      worker(ConCache, [[], [name: :my_cache]]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

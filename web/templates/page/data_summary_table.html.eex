@@ -1,0 +1,43 @@
+<table id="lists" class="tablesorter">
+  <thead>
+    <tr>
+      <th></th>
+      <th class='name'>File</th>
+      <th>Description</th>
+      <th class='count'>In England/Wales Count</th>
+      <th class='count'>Total Count</th>
+      <th>Fields</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='local_authority'>
+      <td>
+        <!--<input type='checkbox' name='local_authority' checked>-->
+      </td>
+      <td class='name'>local_authority</td>
+      <td><%= '@description["local_authorities"]' %></td>
+      <td class='count'><a href=''><%=
+        @data_list
+        |> Enum.filter(&england_or_wales/1)
+        |> Enum.count %></a></td>
+      <td class='count'><a href=''><%= Enum.count(@data_list) %></a></td>
+      <td><%= @data_list |> fields %></td>
+    </tr>
+    <%= for [file, list] <- @maps_list do %>
+    <tr id='<%= file %>'>
+      <td>
+        <!--<input type='checkbox' name='local_authority' checked>-->
+      </td>
+      <td class='name'><%= file %></td>
+      <td><%= @description[file]["description"] %></td>
+      <td class='count'><a href=''><%=
+        list
+        |> local_authorities(@data_list_by_id)
+        |> Enum.filter(&england_or_wales/1)
+        |> Enum.count %></a></td>
+      <td class='count'><a href=''><%= Enum.count(list) %></a></td>
+      <td><%= list |> fields %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
