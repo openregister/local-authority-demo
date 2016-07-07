@@ -11,7 +11,7 @@ defmodule RemoteData do
     url = "https://raw.githubusercontent.com/openregister/#{path}"
     file_path = "../#{path}" |> String.replace("/master","")
     list = ConCache.get_or_store(:my_cache, kind, get_list(url, file_path, kind))
-    [url, list]
+    [page_url(url), list]
   end
 
   def maps_list do
@@ -24,11 +24,17 @@ defmodule RemoteData do
     ConCache.get_or_store(:my_cache, "index", get_maps_index)
   end
 
+  defp page_url url do
+    url
+    |> String.replace("raw.githubusercontent.com/openregister", "github.com/openregister/")
+    |> String.replace("/master/", "/blob/master/")
+  end
+
   defp maps_url_and_path file do
     path = System.get_env("MAPS_PATH")
     url = "https://raw.githubusercontent.com/openregister/#{path}/#{file}"
     file_path = "../#{path}/#{file}" |> String.replace("/master","")
-    [url, file_path]
+    [page_url(url), file_path]
   end
 
   defp map_list file do
