@@ -10,13 +10,14 @@ defmodule RemoteData do
     path = System.get_env("DATA_FILE")
     url = "https://raw.githubusercontent.com/openregister/#{path}"
     file_path = "../#{path}" |> String.replace("/master","")
-    ConCache.get_or_store(:my_cache, kind, get_list(url, file_path, kind))
+    list = ConCache.get_or_store(:my_cache, kind, get_list(url, file_path, kind))
+    [url, list]
   end
 
   def maps_list do
     maps_index
     |> Map.keys
-    |> Enum.map(&( [&1, map_list(&1)] ))
+    |> Enum.map(&map_list/1)
   end
 
   def maps_index do
@@ -32,7 +33,8 @@ defmodule RemoteData do
 
   defp map_list file do
     [url, file_path] = maps_url_and_path("#{file}.tsv")
-    ConCache.get_or_store(:my_cache, file, get_list(url, file_path, file))
+    list = ConCache.get_or_store(:my_cache, file, get_list(url, file_path, file))
+    [file, url, list]
   end
 
   defp get_maps_index do
