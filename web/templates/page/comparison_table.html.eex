@@ -11,9 +11,13 @@
         <th class=''>Local Authority Type</th>
         <th class=''>Name</th>
         <%= for [file, _] <- @maps_list do %>
+        <%= if !(file == "snac") do %>
         <th><%= file %></th>
         <% end %>
+        <% end %>
+        <!--
         <th class=''>Count</th>
+        -->
       </tr>
     </thead>
     <tbody>

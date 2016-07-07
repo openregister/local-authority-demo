@@ -5,10 +5,14 @@
   <td class=''><%= @authority.local_authority_type %></td>
   <td class=''><%= @authority.name %></td>
   <%= for [file, list] <- @data do %>
+  <%= if !(file == "snac") do %>
   <td class=''>
     <% item = match_from_list(list, @authority) %>
-    <%= list |> local_authority_name(@authority, file) %>
+    <%= raw( list |> local_authority_name(@authority, file)) %>
   </td>
   <% end %>
+  <% end %>
+  <!--
   <td class=''><%= match_count(@data, @authority) %></td>
+  -->
 </tr>
