@@ -1,6 +1,7 @@
 <div class="grid-row">
   <%= render "data_summary_table.html",
               description: @description,
+              data_url: @data_url,
               data_list: @data_list,
               maps_list: @maps_list,
               data_list_by_id: @data_list_by_id %>

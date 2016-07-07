@@ -22,7 +22,9 @@
       <td>
         <!--<input type='checkbox' name='local_authority' checked>-->
       </td>
-      <td class='name'>local_authority</td>
+      <td class='name'>
+        <a href="<%= @data_url %>">local_authority</a>
+      </td>
       <td>Local authorities register records</td>
       <td><%= @data_list |> count_in(england) %></td>
       <td><%= @data_list |> count_in(wales) %></td>
@@ -36,12 +38,16 @@
       <td><%= @data_list |> fields %></td>
       -->
     </tr>
-    <%= for [file, list] <- @maps_list do %>
+    <%= for [file, url, list] <- @maps_list do %>
     <tr id='<%= file %>'>
       <td>
         <!--<input type='checkbox' name='local_authority' checked>-->
       </td>
-      <td class='name'><%= file %></td>
+      <td class='name'>
+        <a href="<%= url%>">
+          <%= file %>
+        </a>
+      </td>
       <td><%= @description[file]["description"] %></td>
       <% authorities = list |> local_authorities(@data_list_by_id) %>
       <td><%= authorities |> count_in(england) %></td>

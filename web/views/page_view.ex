@@ -114,7 +114,7 @@ defmodule DataDemo.PageView do
   def match_count data, authority do
     matches = data
     |> Enum.map( fn(row) ->
-      [file, list] = row
+      [file, _, list] = row
       list |> local_authority_name(authority, file)
     end)
     |> Enum.filter(&(&1))

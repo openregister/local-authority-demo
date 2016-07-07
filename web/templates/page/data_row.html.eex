@@ -4,7 +4,7 @@
   <td class=''><%= @authority.uk %></td>
   <td class=''><%= @authority.local_authority_type %></td>
   <td class=''><%= @authority.name %></td>
-  <%= for [file, list] <- @data do %>
+  <%= for [file, _, list] <- @data do %>
   <%= if !(file == "snac") do %>
   <td class=''>
     <% item = match_from_list(list, @authority) %>
