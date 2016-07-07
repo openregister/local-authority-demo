@@ -2,6 +2,7 @@
   <td></td>
   <td class=''><%= @authority.local_authority <> @authority.end_date %></td>
   <td class=''><%= @authority.uk %></td>
+  <td class=''><%= @authority.local_authority_type %></td>
   <td class=''><%= @authority.name %></td>
   <%= for [file, list] <- @data do %>
   <td class=''>
