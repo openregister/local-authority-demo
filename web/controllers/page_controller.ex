@@ -11,4 +11,9 @@ defmodule DataDemo.PageController do
           maps_list: RemoteData.maps_list,
           description: RemoteData.maps_index
   end
+
+  def clear_cache(conn, _params) do
+    RemoteData.clear_cache()
+    text conn, "Cache cleared"
+  end
 end
