@@ -34,13 +34,13 @@ defmodule RemoteData do
     path = System.get_env("MAPS_PATH")
     url = "https://raw.githubusercontent.com/openregister/#{path}/#{file}"
     file_path = "../#{path}/#{file}" |> String.replace("/master","")
-    [page_url(url), file_path]
+    [url, file_path]
   end
 
   defp map_list file do
     [url, file_path] = maps_url_and_path("#{file}.tsv")
     list = ConCache.get_or_store(:my_cache, file, get_list(url, file_path, file))
-    [file, url, list]
+    [file, page_url(url), list]
   end
 
   defp get_maps_index do
