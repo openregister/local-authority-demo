@@ -4,9 +4,17 @@
       <th></th>
       <th class='name'>File</th>
       <th>Description</th>
-      <th class='count'>In England/Wales Count</th>
-      <th class='count'>Total Count</th>
+      <th>In England Count</th>
+      <th>In Wales Count</th>
+      <th>In Scotland Count</th>
+      <th>In NI Count</th>
+      <th>Historic count</th>
+      <th>Total Count</th>
+      <!--
+      <th>Present</th>
+      <th>Missing</th>
       <th>Fields</th>
+      -->
     </tr>
   </thead>
   <tbody>
@@ -15,13 +23,18 @@
         <!--<input type='checkbox' name='local_authority' checked>-->
       </td>
       <td class='name'>local_authority</td>
-      <td><%= '@description["local_authorities"]' %></td>
-      <td class='count'><a href=''><%=
-        @data_list
-        |> Enum.filter(&england_or_wales/1)
-        |> Enum.count %></a></td>
-      <td class='count'><a href=''><%= Enum.count(@data_list) %></a></td>
+      <td>Local authorities register records</td>
+      <td><%= @data_list |> count_in(england) %></td>
+      <td><%= @data_list |> count_in(wales) %></td>
+      <td><%= @data_list |> count_in(scotland) %></td>
+      <td><%= @data_list |> count_in(northern_ireland) %></td>
+      <td><%= @data_list |> count_in(end_date_present) %></td>
+      <td><%= Enum.count(@data_list) %></td>
+      <!--
+      <td></td>
+      <td></td>
       <td><%= @data_list |> fields %></td>
+      -->
     </tr>
     <%= for [file, list] <- @maps_list do %>
     <tr id='<%= file %>'>
@@ -30,13 +43,54 @@
       </td>
       <td class='name'><%= file %></td>
       <td><%= @description[file]["description"] %></td>
-      <td class='count'><a href=''><%=
-        list
-        |> local_authorities(@data_list_by_id)
-        |> Enum.filter(&england_or_wales/1)
-        |> Enum.count %></a></td>
-      <td class='count'><a href=''><%= Enum.count(list) %></a></td>
+      <% authorities = list |> local_authorities(@data_list_by_id) %>
+      <td><%= authorities |> count_in(england) %></td>
+      <td><%= authorities |> count_in(wales) %></td>
+      <td><%= authorities |> count_in(scotland) %></td>
+      <td><%= authorities |> count_in(northern_ireland) %></td>
+      <td><%= authorities |> count_in(end_date_present) %></td>
+      <td><%= Enum.count(list) %></td>
+      <!--
+      <td><% present = @data_list
+      |> Enum.filter(&(!end_date_present.(&1)))
+      |> Enum.map(&(&1.local_authority))
+      |> Enum.into(MapSet.new)
+      |> MapSet.intersection(Enum.map(authorities, &(&1.local_authority)) |> Enum.into(MapSet.new))
+      |> Enum.map(&(
+        item = @data_list_by_id
+        |> Map.get(&1)
+        |> List.first
+        |> label_type
+      ))
+
+      %>
+      <%= present
+      |> Enum.count%>
+      <%= present
+      |> Enum.uniq |> Enum.join(", ")%>
+    </td>
+      <td><% missing = @data_list
+      |> Enum.filter(&(!end_date_present.(&1)))
+      |> Enum.filter(&(!northern_ireland.(&1)))
+      |> Enum.filter(&(&1.local_authority !=  "GLA" ))
+      |> Enum.map(&(&1.local_authority))
+      |> Enum.into(MapSet.new)
+      |> MapSet.difference(Enum.map(authorities, &(&1.local_authority)) |> Enum.into(MapSet.new))
+      |> Enum.map(&(
+        item = @data_list_by_id
+        |> Map.get(&1)
+        |> List.first
+        |> label_type
+      ))
+
+      %>
+      <%= missing
+      |> Enum.count%>
+      <%= missing
+      |> Enum.uniq |> Enum.join(", ")%>
+    </td>
       <td><%= list |> fields %></td>
+    -->
     </tr>
     <% end %>
   </tbody>

@@ -10,8 +10,46 @@ defmodule DataDemo.PageView do
     |> Enum.join(" ")
   end
 
-  def england_or_wales authority do
-    authority.uk == "ENG" || authority.uk == "WLS"
+  def count_in list, function do
+    list
+    |> Enum.filter(&(function.(&1)))
+    |> Enum.count
+  end
+
+  def label_type_name item do
+    "#{item.local_authority_type} #{item.name}"
+  end
+
+  def label_type item do
+    item.local_authority_type
+  end
+
+  def label_name item do
+    item.name
+  end
+
+  def england_or_wales do
+    fn item -> (item.uk == "ENG" || item.uk == "WLS") && !end_date_present.(item) end
+  end
+
+  def england do
+    fn item -> item.uk == "ENG" && !end_date_present.(item) end
+  end
+
+  def wales do
+    fn item -> item.uk == "WLS" && !end_date_present.(item) end
+  end
+
+  def scotland do
+    fn item -> item.uk == "SCT" && !end_date_present.(item) end
+  end
+
+  def northern_ireland do
+    fn item -> item.uk == "NIR" && !end_date_present.(item) end
+  end
+
+  def end_date_present do
+    fn item -> item.end_date |> String.length > 0 end
   end
 
   def local_authority entity, authorities_by_id do
@@ -52,7 +90,7 @@ defmodule DataDemo.PageView do
     if normalise(item.name) == normalise(name) do
       nil
     else
-      item.name
+      "<b>#{item.name}</b>"
     end
   end
 
@@ -60,7 +98,7 @@ defmodule DataDemo.PageView do
     try do
       [legacy_code_for(item, file), legacy_name_for(item, name)]
       |> Enum.filter(&(&1))
-      |> Enum.join(" | ")
+      |> Enum.join(" <br /> ")
     rescue
       KeyError -> ""
     end
