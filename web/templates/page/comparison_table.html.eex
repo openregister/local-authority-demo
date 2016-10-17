@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= for authority <- authorities(@data_list_by_id), authority.uk == @uk do %>
+      <%= for authority <- authorities(@data_list_by_id), "ENG" == @uk do %>
         <%= render "data_row.html", authority: authority, data: @maps_list%>
       <% end %>
     </tbody>
