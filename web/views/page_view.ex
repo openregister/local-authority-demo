@@ -29,23 +29,28 @@ defmodule DataDemo.PageView do
   end
 
   def england_or_wales do
-    fn item -> (item.uk == "ENG" || item.uk == "WLS") && !end_date_present.(item) end
+    # fn item -> (item.uk == "ENG" || item.uk == "WLS") && !end_date_present.(item) end
+    fn item -> true && !end_date_present.(item) end
   end
 
   def england do
-    fn item -> item.uk == "ENG" && !end_date_present.(item) end
+    # fn item -> item.uk == "ENG" && !end_date_present.(item) end
+    fn item -> !end_date_present.(item) end #&& true && !end_date_present.(item) end
   end
 
   def wales do
-    fn item -> item.uk == "WLS" && !end_date_present.(item) end
+    # fn item -> item.uk == "WLS" && !end_date_present.(item) end
+    fn item -> false end
   end
 
   def scotland do
-    fn item -> item.uk == "SCT" && !end_date_present.(item) end
+    # fn item -> item.uk == "SCT" && !end_date_present.(item) end
+    fn item -> false end
   end
 
   def northern_ireland do
-    fn item -> item.uk == "NIR" && !end_date_present.(item) end
+    # fn item -> item.uk == "NIR" && !end_date_present.(item) end
+    fn item -> false end
   end
 
   def end_date_present do
@@ -78,7 +83,7 @@ defmodule DataDemo.PageView do
     |> Enum.find(&(&1.local_authority == authority.local_authority))
   end
 
-  def legacy_code_for item, file do
+  def lists_code_for item, file do
     Map.get item, file_to_id(file)
   end
 
@@ -86,7 +91,7 @@ defmodule DataDemo.PageView do
     name |> String.downcase
   end
 
-  defp legacy_name_for item, name do
+  defp lists_name_for item, name do
     if normalise(item.name) == normalise(name) do
       nil
     else
@@ -96,7 +101,7 @@ defmodule DataDemo.PageView do
 
   defp item_label item, file, name do
     try do
-      [legacy_code_for(item, file), legacy_name_for(item, name)]
+      [lists_code_for(item, file), lists_name_for(item, name)]
       |> Enum.filter(&(&1))
       |> Enum.join(" <br /> ")
     rescue
@@ -112,7 +117,7 @@ defmodule DataDemo.PageView do
   end
 
   def match_count data, authority do
-    matches = data
+    data
     |> Enum.map( fn(row) ->
       [file, _, list] = row
       list |> local_authority_name(authority, file)
@@ -125,7 +130,8 @@ defmodule DataDemo.PageView do
     authorities_by_id
     |> Map.values
     |> Enum.map(&List.first/1)
-    |> Enum.sort_by(&([&1.uk, &1.local_authority]))
+    # |> Enum.sort_by(&([&1.uk, &1.local_authority]))
+    |> Enum.sort_by(&(["ENG", &1.local_authority]))
   end
 
 end
