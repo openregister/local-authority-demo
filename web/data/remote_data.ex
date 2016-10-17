@@ -64,11 +64,23 @@ defmodule RemoteData do
     end
   end
 
+  defp remove_register_curie_prefix text do
+    text
+    |> String.replace(~r/local-authority-(eng|wls|sct|nir):/, "")
+  end
+
+  defp remove_register_country_suffix text do
+    text
+    |> String.replace(~r/local-authority-(eng|wls|sct|nir)/, "local-authority")
+  end
+
   defp get_list url, file_path, kind do
     fn () ->
       url
       |> retrieve_data(file_path)
       |> String.replace_trailing("\n", "")
+      |> remove_register_curie_prefix
+      |> remove_register_country_suffix
       |> DataMorph.structs_from_tsv(OpenRegister, kind)
       |> Enum.to_list
     end
