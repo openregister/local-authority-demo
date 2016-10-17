@@ -7,7 +7,6 @@
       <tr>
         <th></th>
         <th class=''>Local Authority</th>
-        <th class=''>Country</th>
         <th class=''>Local Authority Type</th>
         <th class=''>Name</th>
         <%= for [file, url, _] <- @maps_list do %>
