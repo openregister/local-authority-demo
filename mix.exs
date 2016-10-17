@@ -4,7 +4,7 @@ defmodule DataDemo.Mixfile do
   def project do
     [app: :data_demo,
      version: "0.0.1",
-     elixir: "~> 1.2",
+     elixir: "~> 1.3",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -43,10 +43,9 @@ defmodule DataDemo.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:con_cache, "~> 0.11.0"},
-     {:data_morph, git: "https://github.com/robmckinnon/data_morph.git"},
-     {:httpoison, "~> 0.8.3"},
-     { :yaml_elixir, "~> 1.0.0" },
-     { :yamerl, github: "yakaz/yamerl" },
+     {:data_morph, "~> 0.0.5"},
+     {:httpoison, "~> 0.9"},
+     {:yaml_elixir, "~> 1.0"},
    ]
   end
 
