@@ -18,6 +18,7 @@ defmodule DataDemo.Router do
 
     get "/", PageController, :index
     get "/clear", PageController, :clear_cache
+    get "/:country", PageController, :index
   end
 
   # Other scopes may use custom stacks.

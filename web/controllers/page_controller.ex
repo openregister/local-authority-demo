@@ -3,6 +3,23 @@ defmodule DataDemo.PageController do
 
   def index(conn, params) do
     country = params["country"]
+    case country do
+      "eng" ->
+        render_report conn, country
+      "nir" ->
+        render_report conn, country
+      "sct" ->
+        render_report conn, country
+      "wls" ->
+        render_report conn, country
+      nil ->
+        render conn, "home.html"
+      _ ->
+        text conn, "not found"
+    end
+  end
+
+  defp render_report conn, country do
     kind = Module.concat(LocalAuthority, country |> String.capitalize)
     [data_url, data_list] = RemoteData.data_list(kind, country)
 

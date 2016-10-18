@@ -1,0 +1,10 @@
+<div class="grid-row">
+  <div class="column-half">
+    <ul>
+      <li><%= link "England", to: "/eng" %></li>
+      <li><%= link "Scotland", to: "/sct" %></li>
+      <li><%= link "Northern Ireland", to: "/nir" %></li>
+      <li><%= link "Wales", to: "/wls" %></li>
+    </ul>
+  </div>
+</div>
