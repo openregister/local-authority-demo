@@ -6,11 +6,32 @@ defmodule RemoteData do
     end
   end
 
-  def data_list kind do
-    path = System.get_env("DATA_FILE")
+  defp data_path country do
+    System.get_env("DATA_FILE") |> String.replace("eng", country)
+  end
+
+  defp add_uk_and_type item, "wls" do
+    item |> Map.merge(%{uk: "WLS", local_authority_type: "UA"})
+  end
+
+  defp add_uk_and_type item, "sct" do
+    item |> Map.merge(%{uk: "SCT", local_authority_type: "CA"})
+  end
+
+  defp add_uk_and_type item, "nir" do
+    item |> Map.merge(%{uk: "NIR", local_authority_type: "DIS"})
+  end
+
+  defp add_uk_and_type item, "eng" do
+    item |> Map.merge(%{uk: "ENG"})
+  end
+
+  def data_list kind, country do
+    path = data_path(country)
     url = "https://raw.githubusercontent.com/openregister/#{path}"
     file_path = "../#{path}" |> String.replace("/master","")
     list = ConCache.get_or_store(:my_cache, kind, get_list(url, file_path, kind))
+      |> Enum.map(& add_uk_and_type(&1, country))
     [page_url(url), list]
   end
 
@@ -74,6 +95,13 @@ defmodule RemoteData do
     |> String.replace(~r/local-authority-(eng|wls|sct|nir)/, "local-authority")
   end
 
+  defp struct_to_map struct do
+    struct
+    |> Map.to_list
+    |> Keyword.delete(:__struct__)
+    |> Enum.into(%{})
+  end
+
   defp get_list url, file_path, kind do
     fn () ->
       url
@@ -82,7 +110,7 @@ defmodule RemoteData do
       |> remove_register_curie_prefix
       |> remove_register_country_suffix
       |> DataMorph.structs_from_tsv(OpenRegister, kind)
-      |> Enum.to_list
+      |> Enum.map(&struct_to_map/1)
     end
   end
 end

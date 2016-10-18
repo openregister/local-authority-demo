@@ -29,28 +29,23 @@ defmodule DataDemo.PageView do
   end
 
   def england_or_wales do
-    # fn item -> (item.uk == "ENG" || item.uk == "WLS") && !end_date_present.(item) end
-    fn item -> true && !end_date_present.(item) end
+    fn item -> (item.uk == "ENG" || item.uk == "WLS") && !end_date_present.(item) end
   end
 
   def england do
-    # fn item -> item.uk == "ENG" && !end_date_present.(item) end
-    fn item -> !end_date_present.(item) end #&& true && !end_date_present.(item) end
+    fn item -> item.uk == "ENG" && !end_date_present.(item) end
   end
 
   def wales do
-    # fn item -> item.uk == "WLS" && !end_date_present.(item) end
-    fn item -> false end
+    fn item -> item.uk == "WLS" && !end_date_present.(item) end
   end
 
   def scotland do
-    # fn item -> item.uk == "SCT" && !end_date_present.(item) end
-    fn item -> false end
+    fn item -> item.uk == "SCT" && !end_date_present.(item) end
   end
 
   def northern_ireland do
-    # fn item -> item.uk == "NIR" && !end_date_present.(item) end
-    fn item -> false end
+    fn item -> item.uk == "NIR" && !end_date_present.(item) end
   end
 
   def end_date_present do
@@ -130,8 +125,7 @@ defmodule DataDemo.PageView do
     authorities_by_id
     |> Map.values
     |> Enum.map(&List.first/1)
-    # |> Enum.sort_by(&([&1.uk, &1.local_authority]))
-    |> Enum.sort_by(&(["ENG", &1.local_authority]))
+    |> Enum.sort_by(&([&1.uk, &1.local_authority]))
   end
 
 end

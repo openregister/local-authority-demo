@@ -4,25 +4,32 @@
               data_url: @data_url,
               data_list: @data_list,
               maps_list: @maps_list,
+              country: @country,
               data_list_by_id: @data_list_by_id %>
 </div>
-<%= render "comparison_table.html",
-    title: "Northern Ireland",
-    uk: "NIR",
-    maps_list: @maps_list,
-    data_list_by_id: @data_list_by_id %>
-<%= render "comparison_table.html",
-    title: "Scotland",
-    uk: "SCT",
-    maps_list: @maps_list,
-    data_list_by_id: @data_list_by_id %>
-<%= render "comparison_table.html",
-    title: "Wales",
-    uk: "WLS",
-    maps_list: @maps_list,
-    data_list_by_id: @data_list_by_id %>
-<%= render "comparison_table.html",
-    title: "England",
-    uk: "ENG",
-    maps_list: @maps_list,
-    data_list_by_id: @data_list_by_id %>
+<%= case @country do %>
+  <% "nir" -> %>
+    <%= render "comparison_table.html",
+        title: "Local authorities in Northern Ireland",
+        uk: "NIR",
+        maps_list: @maps_list,
+        data_list_by_id: @data_list_by_id %>
+  <% "sct" -> %>
+    <%= render "comparison_table.html",
+        title: "Local authorities in Scotland",
+        uk: "SCT",
+        maps_list: @maps_list,
+        data_list_by_id: @data_list_by_id %>
+  <% "wls" -> %>
+    <%= render "comparison_table.html",
+        title: "Local authorities in Wales",
+        uk: "WLS",
+        maps_list: @maps_list,
+        data_list_by_id: @data_list_by_id %>
+  <% "eng" -> %>
+    <%= render "comparison_table.html",
+        title: "Local authorities in England",
+        uk: "ENG",
+        maps_list: @maps_list,
+        data_list_by_id: @data_list_by_id %>
+<% end %>
