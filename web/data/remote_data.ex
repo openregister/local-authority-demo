@@ -38,6 +38,10 @@ defmodule RemoteData do
   def maps_list do
     maps_index
     |> Map.keys
+    |> Enum.reject(& &1 == "local-authority-eng")
+    |> Enum.reject(& &1 == "local-authority-wls")
+    |> Enum.reject(& &1 == "local-authority-sct")
+    |> Enum.reject(& &1 == "local-authority-nir")
     |> Enum.map(&map_list/1)
   end
 
