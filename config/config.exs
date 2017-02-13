@@ -7,7 +7,8 @@ use Mix.Config
 
 # General application configuration
 config :data_demo,
-  ecto_repos: [DataDemo.Repo]
+  ecto_repos: []
+  # ecto_repos: [DataDemo.Repo]
 
 # Configures the endpoint
 config :data_demo, DataDemo.Endpoint,

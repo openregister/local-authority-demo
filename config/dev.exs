@@ -34,10 +34,10 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :data_demo, DataDemo.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: System.get_env("DATABASE_NAME"),
-  hostname: "localhost",
-  pool_size: 10
+# config :data_demo, DataDemo.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "postgres",
+#   password: "postgres",
+#   database: System.get_env("DATABASE_NAME"),
+#   hostname: "localhost",
+#   pool_size: 10
